@@ -18,6 +18,8 @@
             --secondary: #3f37c9;
             --accent: #4895ef;
             --success: #4cc9f0;
+            --warning: #ffaa00;
+            --danger: #ff6b6b;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
@@ -101,10 +103,26 @@
             font-size: 16px;
             cursor: pointer;
             transition: var(--transition);
+            position: relative;
         }
         
         .header-icon:hover {
             background: rgba(67, 97, 238, 0.2);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         /* Main Content */
@@ -225,6 +243,7 @@
             position: relative;
             padding: 8px 12px;
             border-radius: 16px;
+            cursor: pointer;
         }
         
         .nav-item.active {
@@ -382,6 +401,88 @@
             box-shadow: 0 8px 25px rgba(67, 97, 238, 0.6);
         }
         
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        
         /* Responsive */
         @media (max-width: 480px) {
             body {
@@ -392,16 +493,171 @@
                 grid-template-columns: 1fr;
             }
         }
+        
+        /* Message list */
+        .message-list {
+            list-style: none;
+        }
+        
+        .message-item {
+            display: flex;
+            padding: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .message-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            flex: 1;
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        
+        .message-sender {
+            font-weight: 600;
+        }
+        
+        .message-time {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+        
+        .message-preview {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .message-unread {
+            background: rgba(67, 97, 238, 0.05);
+        }
+        
+        /* Task list */
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .task-checkbox {
+            margin-right: 16px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .task-checkbox.checked {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        
+        .task-content {
+            flex: 1;
+        }
+        
+        .task-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .task-info {
+            display: flex;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .task-priority {
+            margin-right: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        
+        .priority-high {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--danger);
+        }
+        
+        .priority-medium {
+            background: rgba(255, 170, 0, 0.1);
+            color: var(--warning);
+        }
+        
+        .priority-low {
+            background: rgba(76, 201, 240, 0.1);
+            color: var(--success);
+        }
+        
+        /* Chart container */
+        .chart-container {
+            height: 200px;
+            background: white;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 16px;
+            gap: 8px;
+            overflow: hidden;
+        }
+        
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--primary), var(--accent));
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            min-height: 1px;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+        
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
     <div class="app-container">
         <!-- Status Bar -->
         <div class="status-bar">
-            <div>9:41</div>
-            <div>
-                <i class="fas fa-signal"></i>
-                <i class="fas fa-wifi"></i>
+            <div id="current-time">09:41</div>
+            <div id="battery-status">
                 <i class="fas fa-battery-full"></i>
             </div>
         </div>
@@ -410,14 +666,15 @@
         <header class="app-header">
             <div class="app-title">
                 <i class="fas fa-rocket"></i>
-                <span>AppStyle</span>
+                <span id="page-title">仪表盘</span>
             </div>
             <div class="header-actions">
-                <div class="header-icon">
+                <div class="header-icon" id="search-btn">
                     <i class="fas fa-search"></i>
                 </div>
-                <div class="header-icon">
+                <div class="header-icon" id="notification-btn">
                     <i class="fas fa-bell"></i>
+                    <div class="notification-badge">3</div>
                 </div>
             </div>
         </header>
@@ -503,127 +760,129 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <ul class="app-list">
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-user-plus"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">新用户注册</div>
-                                    <div class="list-subtitle">10分钟前</div>
-                                </div>
-                            </li>
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">新订单</div>
-                                    <div class="list-subtitle">30分钟前</div>
-                                </div>
-                            </li>
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-comment"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">新消息</div>
-                                    <div class="list-subtitle">1小时前</div>
-                                </div>
-                            </li>
+                        <ul class="app-list" id="notification-list">
+                            <!-- Notifications will be added by JS -->
                         </ul>
                     </div>
                 </div>
             </div>
             
-            <!-- Analytics Tab -->
-            <div id="analytics-tab" class="tab-content">
+            <!-- Messages Tab -->
+            <div id="messages-tab" class="tab-content">
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">
-                            <i class="fas fa-chart-bar"></i>
+                            <i class="fas fa-envelope"></i>
                         </div>
                         <div>
-                            <div class="card-title">数据分析</div>
-                            <div class="card-subtitle">查看关键指标和图表</div>
+                            <div class="card-title">消息中心</div>
+                            <div class="card-subtitle">未读消息: 3</div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <div style="height: 200px; background: linear-gradient(135deg, #f0f4f8, #d9e2ec); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--gray); margin-bottom: 20px;">
-                            <i class="fas fa-chart-line" style="font-size: 48px;"></i>
-                            <div style="margin-left: 16px; font-size: 1.2rem;">交互式图表区域</div>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                            <div>
-                                <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary);">42%</div>
-                                <div style="font-size: 0.8rem;">转化率</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 1.8rem; font-weight: bold; color: #ff6b6b;">1.2K</div>
-                                <div style="font-size: 0.8rem;">访问量</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 1.8rem; font-weight: bold; color: #4cc9f0;">18.4s</div>
-                                <div style="font-size: 0.8rem;">停留时间</div>
-                            </div>
-                        </div>
+                        <ul class="message-list" id="message-list">
+                            <!-- Messages will be added by JS -->
+                        </ul>
                     </div>
                 </div>
                 
                 <div class="card">
                     <div class="card-header">
                         <div class="card-icon" style="background: linear-gradient(135deg, #4cc9f0, #4895ef);">
-                            <i class="fas fa-globe"></i>
+                            <i class="fas fa-user-friends"></i>
                         </div>
                         <div>
-                            <div class="card-title">用户分布</div>
-                            <div class="card-subtitle">按地区统计</div>
+                            <div class="card-title">团队成员</div>
+                            <div class="card-subtitle">在线: 8/12</div>
                         </div>
                     </div>
                     <div class="card-body">
-                        <ul class="app-list">
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-flag-usa"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">北美</div>
-                                    <div class="list-subtitle">42% 用户</div>
-                                </div>
-                                <div>1,176</div>
-                            </li>
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-flag-eu"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">欧洲</div>
-                                    <div class="list-subtitle">31% 用户</div>
-                                </div>
-                                <div>868</div>
-                            </li>
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-flag-asia"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">亚洲</div>
-                                    <div class="list-subtitle">18% 用户</div>
-                                </div>
-                                <div>504</div>
-                            </li>
-                            <li class="list-item">
-                                <div class="list-icon">
-                                    <i class="fas fa-flag"></i>
-                                </div>
-                                <div class="list-content">
-                                    <div class="list-title">其他地区</div>
-                                    <div class="list-subtitle">9% 用户</div>
-                                </div>
-                                <div>252</div>
-                            </li>
+                        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+                            <div class="team-member">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #4361ee, #4895ef); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">张</div>
+                                <div style="text-align: center; font-size: 0.8rem; margin-top: 4px;">张明</div>
+                            </div>
+                            <div class="team-member">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #ff6b6b, #ff8e8e); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">李</div>
+                                <div style="text-align: center; font-size: 0.8rem; margin-top: 4px;">李华</div>
+                            </div>
+                            <div class="team-member">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #4cc9f0, #4895ef); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">王</div>
+                                <div style="text-align: center; font-size: 0.8rem; margin-top: 4px;">王芳</div>
+                            </div>
+                            <div class="team-member">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #9d4edd, #c77dff); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">刘</div>
+                                <div style="text-align: center; font-size: 0.8rem; margin-top: 4px;">刘伟</div>
+                            </div>
+                            <div class="team-member">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #ffaa00, #ffd166); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px;">陈</div>
+                                <div style="text-align: center; font-size: 0.8rem; margin-top: 4px;">陈静</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tasks Tab -->
+            <div id="tasks-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #ffaa00, #ffd166);">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">我的任务</div>
+                            <div class="card-subtitle">已完成 8/12 个任务</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="app-list" id="task-list">
+                            <!-- Tasks will be added by JS -->
                         </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #06d6a0, #0db39e);">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">任务统计</div>
+                            <div class="card-subtitle">本周任务完成情况</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <div class="chart-bar" style="height: 40%;">
+                                <div class="chart-value">12</div>
+                                <div class="chart-label">周一</div>
+                            </div>
+                            <div class="chart-bar" style="height: 60%;">
+                                <div class="chart-value">18</div>
+                                <div class="chart-label">周二</div>
+                            </div>
+                            <div class="chart-bar" style="height: 80%;">
+                                <div class="chart-value">24</div>
+                                <div class="chart-label">周三</div>
+                            </div>
+                            <div class="chart-bar" style="height: 65%;">
+                                <div class="chart-value">19</div>
+                                <div class="chart-label">周四</div>
+                            </div>
+                            <div class="chart-bar" style="height: 45%;">
+                                <div class="chart-value">13</div>
+                                <div class="chart-label">周五</div>
+                            </div>
+                            <div class="chart-bar" style="height: 30%;">
+                                <div class="chart-value">8</div>
+                                <div class="chart-label">周六</div>
+                            </div>
+                            <div class="chart-bar" style="height: 20%;">
+                                <div class="chart-value">5</div>
+                                <div class="chart-label">周日</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -699,7 +958,7 @@
                             </div>
                             <i class="fas fa-chevron-right"></i>
                         </li>
-                        <li class="list-item">
+                        <li class="list-item" id="logout-btn">
                             <div class="list-icon" style="background: rgba(255, 107, 107, 0.1); color: #ff6b6b;">
                                 <i class="fas fa-sign-out-alt"></i>
                             </div>
@@ -714,45 +973,173 @@
         </main>
         
         <!-- Floating Action Button -->
-        <div class="fab">
+        <div class="fab" id="fab-btn">
             <i class="fas fa-plus"></i>
         </div>
         
         <!-- Navigation Bar -->
         <nav class="app-nav">
-            <a href="#" class="nav-item active" data-tab="dashboard-tab">
+            <div class="nav-item active" data-tab="dashboard-tab" data-title="仪表盘">
                 <div class="nav-icon">
                     <i class="fas fa-home"></i>
                 </div>
                 <span>首页</span>
-            </a>
-            <a href="#" class="nav-item" data-tab="analytics-tab">
+            </div>
+            <div class="nav-item" data-tab="messages-tab" data-title="消息">
                 <div class="nav-icon">
-                    <i class="fas fa-chart-pie"></i>
+                    <i class="fas fa-comments"></i>
                 </div>
-                <span>分析</span>
-            </a>
-            <a href="#" class="nav-item">
+                <span>消息</span>
+            </div>
+            <div class="nav-item" data-tab="tasks-tab" data-title="任务">
                 <div class="nav-icon">
-                    <i class="fas fa-file-invoice"></i>
+                    <i class="fas fa-tasks"></i>
                 </div>
-                <span>文档</span>
-            </a>
-            <a href="#" class="nav-item" data-tab="profile-tab">
+                <span>任务</span>
+            </div>
+            <div class="nav-item" data-tab="profile-tab" data-title="我的">
                 <div class="nav-icon">
                     <i class="fas fa-user"></i>
                 </div>
                 <span>我的</span>
-            </a>
+            </div>
         </nav>
     </div>
 
+    <!-- Modal -->
+    <div class="modal" id="create-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">创建新任务</div>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="task-title">任务标题</label>
+                    <input type="text" id="task-title" placeholder="输入任务标题">
+                </div>
+                <div class="form-group">
+                    <label for="task-description">任务描述</label>
+                    <textarea id="task-description" placeholder="输入任务描述" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-priority">优先级</label>
+                    <select id="task-priority">
+                        <option value="high">高优先级</option>
+                        <option value="medium" selected>中优先级</option>
+                        <option value="low">低优先级</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-deadline">截止日期</label>
+                    <input type="date" id="task-deadline">
+                </div>
+                <button class="btn btn-primary" id="create-task-btn" style="width: 100%;">创建任务</button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // 页面加载时初始化数据
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化通知列表
+            const notifications = [
+                { title: '新用户注册', content: '10分钟前有5位新用户注册', time: '10分钟前', icon: 'fa-user-plus' },
+                { title: '新订单', content: '您有一个新的订单待处理', time: '30分钟前', icon: 'fa-shopping-cart' },
+                { title: '系统更新', content: '新版本已发布，请及时更新', time: '2小时前', icon: 'fa-sync-alt' }
+            ];
+            
+            const notificationList = document.getElementById('notification-list');
+            notifications.forEach(notif => {
+                const li = document.createElement('li');
+                li.className = 'list-item';
+                li.innerHTML = `
+                    <div class="list-icon">
+                        <i class="fas ${notif.icon}"></i>
+                    </div>
+                    <div class="list-content">
+                        <div class="list-title">${notif.title}</div>
+                        <div class="list-subtitle">${notif.time}</div>
+                    </div>
+                `;
+                notificationList.appendChild(li);
+            });
+            
+            // 初始化消息列表
+            const messages = [
+                { sender: '李华', preview: '项目文档已更新，请查看...', time: '09:30', unread: true },
+                { sender: '王芳', preview: '会议时间改为明天下午2点', time: '昨天', unread: true },
+                { sender: '刘伟', preview: '设计稿已发送，请查收', time: '昨天', unread: false },
+                { sender: '陈静', preview: '我们需要讨论下周的计划', time: '前天', unread: false },
+                { sender: '技术支持', preview: '您的问题已解决', time: '2023-05-20', unread: false }
+            ];
+            
+            const messageList = document.getElementById('message-list');
+            messages.forEach(msg => {
+                const li = document.createElement('li');
+                li.className = `message-item ${msg.unread ? 'message-unread' : ''}`;
+                li.innerHTML = `
+                    <div class="message-avatar">${msg.sender.charAt(0)}</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <div class="message-sender">${msg.sender}</div>
+                            <div class="message-time">${msg.time}</div>
+                        </div>
+                        <div class="message-preview">${msg.preview}</div>
+                    </div>
+                `;
+                messageList.appendChild(li);
+            });
+            
+            // 初始化任务列表
+            const tasks = [
+                { title: '完成UI设计稿', priority: 'high', completed: false },
+                { title: '编写项目文档', priority: 'medium', completed: false },
+                { title: '测试用户注册流程', priority: 'high', completed: true },
+                { title: '与开发团队开会', priority: 'medium', completed: false },
+                { title: '准备演示文稿', priority: 'low', completed: true }
+            ];
+            
+            const taskList = document.getElementById('task-list');
+            tasks.forEach(task => {
+                const li = document.createElement('li');
+                li.className = 'task-item';
+                li.innerHTML = `
+                    <div class="task-checkbox ${task.completed ? 'checked' : ''}">${task.completed ? '✓' : ''}</div>
+                    <div class="task-content">
+                        <div class="task-title">${task.title}</div>
+                        <div class="task-info">
+                            <span class="task-priority priority-${task.priority}">${task.priority === 'high' ? '高优先级' : task.priority === 'medium' ? '中优先级' : '低优先级'}</span>
+                        </div>
+                    </div>
+                `;
+                
+                // 添加任务点击事件
+                const checkbox = li.querySelector('.task-checkbox');
+                checkbox.addEventListener('click', function() {
+                    this.classList.toggle('checked');
+                    this.innerHTML = this.classList.contains('checked') ? '✓' : '';
+                });
+                
+                taskList.appendChild(li);
+            });
+            
+            // 更新时间显示
+            updateTime();
+            setInterval(updateTime, 60000);
+        });
+        
+        // 更新时间显示
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + 
+                           now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('current-time').textContent = timeStr;
+        }
+        
         // 标签切换功能
         document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                e.preventDefault();
-                
+            item.addEventListener('click', function() {
                 // 更新活动导航项
                 document.querySelectorAll('.nav-item').forEach(nav => {
                     nav.classList.remove('active');
@@ -761,16 +1148,18 @@
                 
                 // 切换标签内容
                 const tabId = this.getAttribute('data-tab');
+                const pageTitle = this.getAttribute('data-title');
                 if (tabId) {
                     document.querySelectorAll('.tab-content').forEach(tab => {
                         tab.classList.remove('active');
                     });
                     document.getElementById(tabId).classList.add('active');
+                    document.getElementById('page-title').textContent = pageTitle;
                 }
             });
         });
         
-        // 模拟通知图标动画
+        // 通知图标动画
         const bellIcon = document.querySelector('.fa-bell');
         setInterval(() => {
             bellIcon.style.transform = 'rotate(15deg)';
@@ -794,15 +1183,86 @@
         });
         
         // FAB按钮点击效果
-        const fab = document.querySelector('.fab');
+        const fab = document.getElementById('fab-btn');
         fab.addEventListener('click', () => {
-            fab.style.transform = 'scale(0.9)';
-            fab.style.boxShadow = '0 2px 10px rgba(67, 97, 238, 0.3)';
-            setTimeout(() => {
-                fab.style.transform = '';
-                fab.style.boxShadow = '';
-                alert('新建内容功能已触发！');
-            }, 300);
+            document.getElementById('create-modal').classList.add('active');
+        });
+        
+        // 关闭模态框
+        document.querySelector('.close-modal').addEventListener('click', function() {
+            document.getElementById('create-modal').classList.remove('active');
+        });
+        
+        // 创建任务按钮
+        document.getElementById('create-task-btn').addEventListener('click', function() {
+            const title = document.getElementById('task-title').value;
+            const priority = document.getElementById('task-priority').value;
+            
+            if (title.trim() === '') {
+                alert('请填写任务标题');
+                return;
+            }
+            
+            const taskList = document.getElementById('task-list');
+            const li = document.createElement('li');
+            li.className = 'task-item';
+            li.innerHTML = `
+                <div class="task-checkbox"></div>
+                <div class="task-content">
+                    <div class="task-title">${title}</div>
+                    <div class="task-info">
+                        <span class="task-priority priority-${priority}">${priority === 'high' ? '高优先级' : priority === 'medium' ? '中优先级' : '低优先级'}</span>
+                    </div>
+                </div>
+            `;
+            
+            // 添加任务点击事件
+            const checkbox = li.querySelector('.task-checkbox');
+            checkbox.addEventListener('click', function() {
+                this.classList.toggle('checked');
+                this.innerHTML = this.classList.contains('checked') ? '✓' : '';
+            });
+            
+            taskList.prepend(li);
+            
+            // 重置表单并关闭模态框
+            document.getElementById('task-title').value = '';
+            document.getElementById('task-description').value = '';
+            document.getElementById('task-priority').value = 'medium';
+            document.getElementById('task-deadline').value = '';
+            
+            document.getElementById('create-modal').classList.remove('active');
+            
+            // 显示成功消息
+            alert('任务创建成功！');
+        });
+        
+        // 退出登录
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            if (confirm('确定要退出登录吗？')) {
+                alert('您已成功退出登录');
+                // 在实际应用中这里会重定向到登录页面
+            }
+        });
+        
+        // 搜索按钮
+        document.getElementById('search-btn').addEventListener('click', function() {
+            alert('搜索功能已打开');
+        });
+        
+        // 通知按钮
+        document.getElementById('notification-btn').addEventListener('click', function() {
+            // 切换到消息标签页
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            document.querySelector('[data-tab="messages-tab"]').classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById('messages-tab').classList.add('active');
+            document.getElementById('page-title').textContent = '消息';
         });
     </script>
 </body>
