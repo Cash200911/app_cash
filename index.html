@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppStyle - 应用风格网站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --success: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+            max-width: 500px;
+            margin: 0 auto;
+            height: 100vh;
+            position: relative;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* App Container */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            height: 24px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 16px;
+            font-size: 12px;
+            color: var(--gray);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Header */
+        .app-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .app-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .header-icon:hover {
+            background: rgba(67, 97, 238, 0.2);
+        }
+        
+        /* Main Content */
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            scroll-behavior: smooth;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-header {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .card-subtitle {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .card-body {
+            padding: 16px;
+        }
+        
+        /* Stats */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 8px 0;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+        }
+        
+        /* Navigation Bar */
+        .app-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--gray);
+            font-size: 0.75rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 8px 12px;
+            border-radius: 16px;
+        }
+        
+        .nav-item.active {
+            color: var(--primary);
+        }
+        
+        .nav-item.active .nav-icon {
+            background: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+            padding: 12px;
+            transition: var(--transition);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        /* Progress */
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            width: 75%;
+        }
+        
+        /* List */
+        .app-list {
+            list-style: none;
+        }
+        
+        .list-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .list-item:hover {
+            background: rgba(67, 97, 238, 0.03);
+        }
+        
+        .list-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(67, 97, 238, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-right: 16px;
+            font-size: 18px;
+        }
+        
+        .list-content {
+            flex: 1;
+        }
+        
+        .list-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .list-subtitle {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+            cursor: pointer;
+            z-index: 99;
+            transition: var(--transition);
+            animation: pulse 2s infinite;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.6);
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            body {
+                max-width: 100%;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <div>9:41</div>
+            <div>
+                <i class="fas fa-signal"></i>
+                <i class="fas fa-wifi"></i>
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+        
+        <!-- App Header -->
+        <header class="app-header">
+            <div class="app-title">
+                <i class="fas fa-rocket"></i>
+                <span>AppStyle</span>
+            </div>
+            <div class="header-actions">
+                <div class="header-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="header-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="app-content">
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content active">
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-value">2.8K</div>
+                        <div class="stat-label">用户</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="stat-value">78%</div>
+                        <div class="stat-label">增长</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <div class="stat-value">324</div>
+                        <div class="stat-label">订单</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-star"></i>
+                        <div class="stat-value">4.9</div>
+                        <div class="stat-label">评分</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">项目进度</div>
+                            <div class="card-subtitle">已完成75%的任务</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span>UI设计</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span>前端开发</span>
+                                <span>60%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-container">
+                            <div class="progress-header">
+                                <span>后端开发</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">最新通知</div>
+                            <div class="card-subtitle">你有3条新通知</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="app-list">
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">新用户注册</div>
+                                    <div class="list-subtitle">10分钟前</div>
+                                </div>
+                            </li>
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">新订单</div>
+                                    <div class="list-subtitle">30分钟前</div>
+                                </div>
+                            </li>
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-comment"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">新消息</div>
+                                    <div class="list-subtitle">1小时前</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Analytics Tab -->
+            <div id="analytics-tab" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e);">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">数据分析</div>
+                            <div class="card-subtitle">查看关键指标和图表</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div style="height: 200px; background: linear-gradient(135deg, #f0f4f8, #d9e2ec); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--gray); margin-bottom: 20px;">
+                            <i class="fas fa-chart-line" style="font-size: 48px;"></i>
+                            <div style="margin-left: 16px; font-size: 1.2rem;">交互式图表区域</div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                            <div>
+                                <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary);">42%</div>
+                                <div style="font-size: 0.8rem;">转化率</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.8rem; font-weight: bold; color: #ff6b6b;">1.2K</div>
+                                <div style="font-size: 0.8rem;">访问量</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 1.8rem; font-weight: bold; color: #4cc9f0;">18.4s</div>
+                                <div style="font-size: 0.8rem;">停留时间</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: linear-gradient(135deg, #4cc9f0, #4895ef);">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div>
+                            <div class="card-title">用户分布</div>
+                            <div class="card-subtitle">按地区统计</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="app-list">
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-flag-usa"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">北美</div>
+                                    <div class="list-subtitle">42% 用户</div>
+                                </div>
+                                <div>1,176</div>
+                            </li>
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-flag-eu"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">欧洲</div>
+                                    <div class="list-subtitle">31% 用户</div>
+                                </div>
+                                <div>868</div>
+                            </li>
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-flag-asia"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">亚洲</div>
+                                    <div class="list-subtitle">18% 用户</div>
+                                </div>
+                                <div>504</div>
+                            </li>
+                            <li class="list-item">
+                                <div class="list-icon">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <div class="list-content">
+                                    <div class="list-title">其他地区</div>
+                                    <div class="list-subtitle">9% 用户</div>
+                                </div>
+                                <div>252</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="tab-content">
+                <div style="text-align: center; margin: 20px 0;">
+                    <div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--accent)); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; color: white; font-size: 40px;">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h2 style="margin-bottom: 8px;">张明</h2>
+                    <p style="color: var(--gray);">高级产品设计师</p>
+                </div>
+                
+                <div class="card">
+                    <ul class="app-list">
+                        <li class="list-item">
+                            <div class="list-icon">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">账户设置</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">隐私与安全</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">通知设置</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-icon">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">主题与外观</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <ul class="app-list">
+                        <li class="list-item">
+                            <div class="list-icon">
+                                <i class="fas fa-question-circle"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">帮助与支持</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-icon">
+                                <i class="fas fa-info-circle"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">关于我们</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                        <li class="list-item">
+                            <div class="list-icon" style="background: rgba(255, 107, 107, 0.1); color: #ff6b6b;">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </div>
+                            <div class="list-content">
+                                <div class="list-title">退出登录</div>
+                            </div>
+                            <i class="fas fa-chevron-right"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Floating Action Button -->
+        <div class="fab">
+            <i class="fas fa-plus"></i>
+        </div>
+        
+        <!-- Navigation Bar -->
+        <nav class="app-nav">
+            <a href="#" class="nav-item active" data-tab="dashboard-tab">
+                <div class="nav-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <span>首页</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="analytics-tab">
+                <div class="nav-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <span>分析</span>
+            </a>
+            <a href="#" class="nav-item">
+                <div class="nav-icon">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <span>文档</span>
+            </a>
+            <a href="#" class="nav-item" data-tab="profile-tab">
+                <div class="nav-icon">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span>我的</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        // 标签切换功能
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // 更新活动导航项
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // 切换标签内容
+                const tabId = this.getAttribute('data-tab');
+                if (tabId) {
+                    document.querySelectorAll('.tab-content').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    document.getElementById(tabId).classList.add('active');
+                }
+            });
+        });
+        
+        // 模拟通知图标动画
+        const bellIcon = document.querySelector('.fa-bell');
+        setInterval(() => {
+            bellIcon.style.transform = 'rotate(15deg)';
+            setTimeout(() => {
+                bellIcon.style.transform = 'rotate(-15deg)';
+            }, 300);
+            setTimeout(() => {
+                bellIcon.style.transform = 'rotate(0)';
+            }, 600);
+        }, 5000);
+        
+        // 卡片悬停效果增强
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-8px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+        
+        // FAB按钮点击效果
+        const fab = document.querySelector('.fab');
+        fab.addEventListener('click', () => {
+            fab.style.transform = 'scale(0.9)';
+            fab.style.boxShadow = '0 2px 10px rgba(67, 97, 238, 0.3)';
+            setTimeout(() => {
+                fab.style.transform = '';
+                fab.style.boxShadow = '';
+                alert('新建内容功能已触发！');
+            }, 300);
+        });
+    </script>
+</body>
+</html>
